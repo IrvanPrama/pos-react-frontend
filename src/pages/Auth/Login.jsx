@@ -28,11 +28,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-=======
-    // Step 13, tambahkan fungsi berikut untuk kirim data login
-    // Step 14, ada di File AuthRoutes
->>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
     try {
       const response = await axios.post(
         "http://localhost:5000/login",
@@ -41,20 +36,10 @@ const Login = () => {
 
       console.log(response.data);
 
-<<<<<<< HEAD
       if (response.data.message === "Login successful") {
         navigate("/dashboard");
       } else {
         navigate("/login");
-=======
-      // Step 18, Ketik berjalan lancar arahkan ke /dashboard
-      if (response.data.message === "Login successful") {
-        // Redirect ke Dasboard
-        navigate("/dashboard");
-      } else {
-        //Ketika gagal
-        // Handle other success scenarios or display an error message
->>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
       }
     } catch (error) {
       console.error(
@@ -73,10 +58,7 @@ const Login = () => {
             <div className="card-body">
               <h3 className="card-title text-center mb-4">Login</h3>
               <form onSubmit={handleSubmit}>
-<<<<<<< HEAD
                 {/* {<p className="has-text-centered">{message}</p>} */}
-=======
->>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">
                     Username

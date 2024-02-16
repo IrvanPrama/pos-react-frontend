@@ -2,10 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Button, Table, Form, InputGroup, Row } from "react-bootstrap";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
-=======
->>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
 
 const Transactions = () => {
   const [transactionLists, setTransactionLists] = useState([]);
@@ -14,19 +11,10 @@ const Transactions = () => {
   const [filterBy, setFilter] = useState("");
   const [filterQty, setFilterQty] = useState("");
 
-<<<<<<< HEAD
   useEffect(() => {
     getTransactionLists();
     getTotalTransaction();
   });
-=======
-  // const navigate = useNavigate();
-
-  useEffect(() => {
-    getTransactionLists();
-    getTotalTransaction();
-  }, []);
->>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
 
   const getTotalTransaction = async () => {
     try {
@@ -40,11 +28,7 @@ const Transactions = () => {
   };
 
   const getTransactionLists = async () => {
-<<<<<<< HEAD
     const response = await axios.get("http://localhost:5000/transaction");
-=======
-    const response = await axios.get("http://localhost:5000/transactions");
->>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
     setTransactionLists(response.data);
   };
 

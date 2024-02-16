@@ -5,20 +5,13 @@ import axios from "axios";
 
 // 2. Import pustaka untuk menambahkan dan mengaplikasikan state
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
 import { Link, useNavigate } from "react-router-dom";
-=======
-import { Link } from "react-router-dom";
->>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
 import Table from "react-bootstrap/Table";
 
 const PacketTransactions = () => {
   //3. gunakan pustaka untuk menambahkan state pada bagian kosong berikut
   const [transactionLists, setTransactionLists] = useState([]);
-<<<<<<< HEAD
   const navigate = useNavigate();
-=======
->>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
 
   // 4. gunakan fungsi pada pustaka yang untuk mengaplikasikan state yang ditambahkan pada bagian kosong berikut
   useEffect(() => {
