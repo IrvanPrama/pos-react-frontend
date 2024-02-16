@@ -1,14 +1,21 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
+<<<<<<< HEAD
 import { Link, useNavigate } from "react-router-dom";
+=======
+import { Link } from "react-router-dom";
+>>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
 import ReuseButton from "../../component/ReuseButton";
 import Table from "react-bootstrap/esm/Table";
 
 const Products = () => {
   const [productLists, setProductLists] = useState([]);
+<<<<<<< HEAD
   const navigate = useNavigate();
 
+=======
+>>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
   useEffect(() => {
     getProductLists();
   }, []);

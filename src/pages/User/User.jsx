@@ -35,7 +35,11 @@ const User = () => {
               No.
             </th>
             <th scope="col">Name</th>
+<<<<<<< HEAD
             <th scope="col">Role</th>
+=======
+            <th scope="col">No hp</th>
+>>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
             <th scope="col">Password</th>
             <th scope="col">File</th>
             <th scope="col">Aksi</th>
@@ -49,7 +53,11 @@ const User = () => {
                 {index + 1}
               </th>
               <td>{user.user_name}</td>
+<<<<<<< HEAD
               <td>{user.role}</td>
+=======
+              <td>{user.user_nohp}</td>
+>>>>>>> 135ef67907117b9cbc29fde041ae00c36f9d07b8
               <td>{user.user_password}</td>
               <td>
                 <img
