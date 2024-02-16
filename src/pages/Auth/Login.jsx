@@ -28,8 +28,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Step 13, tambahkan fungsi berikut untuk kirim data login
-    // Step 14, ada di File AuthRoutes
     try {
       const response = await axios.post(
         "http://localhost:5000/login",
@@ -38,13 +36,10 @@ const Login = () => {
 
       console.log(response.data);
 
-      // Step 18, Ketik berjalan lancar arahkan ke /dashboard
       if (response.data.message === "Login successful") {
-        // Redirect ke Dasboard
         navigate("/dashboard");
       } else {
-        //Ketika gagal
-        // Handle other success scenarios or display an error message
+        navigate("/login");
       }
     } catch (error) {
       console.error(
@@ -63,6 +58,7 @@ const Login = () => {
             <div className="card-body">
               <h3 className="card-title text-center mb-4">Login</h3>
               <form onSubmit={handleSubmit}>
+                {/* {<p className="has-text-centered">{message}</p>} */}
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">
                     Username

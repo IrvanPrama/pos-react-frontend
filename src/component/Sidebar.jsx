@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { FaHome, FaShoppingBasket, FaThList, FaBars } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,32 +8,16 @@ import {
   faBoxOpen,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-
+// import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+// import { Logout } from "../features/authSlice";
 
 function Sidebar({ children }) {
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      // You can use fetch or any other library to make an HTTP request
-      await fetch("http://localhost:5000/logout", {
-        method: "DELETE", // You may need to adjust the HTTP method based on your API requirements
-        headers: {
-          // Add any headers needed for your API
-          "Content-Type": "application/json",
-          // You may need to include authentication headers if required
-        },
-        // You can include a body if your API requires it
-        // body: JSON.stringify({ /* any data you want to send */ }),
-      });
-
-      // Redirect to the login page or any other page after successful logout
-      navigate("/login"); // Change '/login' to the path you want to redirect to
-    } catch (error) {
-      console.error("Logout failed", error);
-      // Handle error, show a notification, or redirect to an error page
-    }
+  const logout = async () => {
+    await axios.delete("http://localhost:5000/logout");
+    navigate("/");
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -69,10 +54,9 @@ function Sidebar({ children }) {
       icon: <FontAwesomeIcon icon={faUserFriends} />,
     },
     {
-      path: "",
+      onClick: logout,
       name: "Logout",
       icon: <FontAwesomeIcon icon={faRightFromBracket} />, // Use the imported FontAwesome icon
-      onClick: handleLogout,
     },
   ];
 

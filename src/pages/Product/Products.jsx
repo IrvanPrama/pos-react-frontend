@@ -1,12 +1,14 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReuseButton from "../../component/ReuseButton";
 import Table from "react-bootstrap/esm/Table";
 
 const Products = () => {
   const [productLists, setProductLists] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     getProductLists();
   }, []);

@@ -3,8 +3,10 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import { useNavigate } from "react-router-dom";
 
 const AddedPacket = () => {
+  const navigate = useNavigate();
   const [transactionLists, setTransactionLists] = useState([]);
 
   useEffect(() => {

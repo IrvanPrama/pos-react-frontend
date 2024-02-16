@@ -35,7 +35,7 @@ const User = () => {
               No.
             </th>
             <th scope="col">Name</th>
-            <th scope="col">No hp</th>
+            <th scope="col">Role</th>
             <th scope="col">Password</th>
             <th scope="col">File</th>
             <th scope="col">Aksi</th>
@@ -49,7 +49,7 @@ const User = () => {
                 {index + 1}
               </th>
               <td>{user.user_name}</td>
-              <td>{user.user_nohp}</td>
+              <td>{user.role}</td>
               <td>{user.user_password}</td>
               <td>
                 <img

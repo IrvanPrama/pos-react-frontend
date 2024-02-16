@@ -3,11 +3,26 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import ReuseButton from "../../component/ReuseButton";
 import Table from "react-bootstrap/esm/Table";
+import { useNavigate } from "react-router-dom";
 
 const ProductMenu = () => {
+  const navigate = useNavigate();
   const [productLists, setProductLists] = useState([]);
   useEffect(() => {
+    const handleUnauthorized = (error) => {
+      if (error.response.status === 401) {
+        navigate("/login");
+        window.location.reload();
+      }
+    };
     getProductLists();
+    // Add an interceptor to handle 401 responses globally
+    axios.interceptors.response.use((response) => response, handleUnauthorized);
+
+    // Clean up the interceptor when the component unmounts
+    return () => {
+      axios.interceptors.response.eject(handleUnauthorized);
+    };
   }, []);
 
   const getProductLists = async () => {

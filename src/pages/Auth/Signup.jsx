@@ -10,7 +10,7 @@ import axios from "axios";
 const Signup = () => {
   const [user_name, setName] = useState("");
   const [user_password, setPassword] = useState("");
-  const [user_nohp, setNohp] = useState("");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   // Step 9, tambahkan fitur hide & show password line: 16-21
@@ -30,7 +30,7 @@ const Signup = () => {
       await axios.post("http://localhost:5000/user/add", {
         user_name,
         user_password,
-        user_nohp,
+        role,
       });
       navigate("/users/");
     } catch (error) {
@@ -77,14 +77,16 @@ const Signup = () => {
                   </div>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Nomor HP</Form.Label>
-                  <Form.Control
-                    type="text"
-                    className="input"
-                    value={user_nohp}
-                    onChange={(e) => setNohp(e.target.value)}
-                    placeholder="Contoh: GIanyar"
-                  />
+                  <Form.Label>Daftar sebagai</Form.Label>
+                  <div className="input">
+                    <select
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                    >
+                      <option value="admin">Admin</option>
+                      <option value="user">User</option>
+                    </select>
+                  </div>
                 </Form.Group>
 
                 <Button className="my-3" type="submit" variant="primary">
@@ -93,7 +95,7 @@ const Signup = () => {
               </Form>
               {/* Step 6, tambahkan link redirect ke signup */}
               <p>
-                Sudah punya akun? <Link to="/signup">Signup</Link>
+                Sudah punya akun? <Link to="/login">Login</Link>
               </p>
             </div>
           </div>

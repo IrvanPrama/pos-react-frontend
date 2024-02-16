@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Button, Table, Form, InputGroup, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const Transactions = () => {
   const [transactionLists, setTransactionLists] = useState([]);
@@ -10,12 +11,10 @@ const Transactions = () => {
   const [filterBy, setFilter] = useState("");
   const [filterQty, setFilterQty] = useState("");
 
-  // const navigate = useNavigate();
-
   useEffect(() => {
     getTransactionLists();
     getTotalTransaction();
-  }, []);
+  });
 
   const getTotalTransaction = async () => {
     try {
@@ -29,7 +28,7 @@ const Transactions = () => {
   };
 
   const getTransactionLists = async () => {
-    const response = await axios.get("http://localhost:5000/transactions");
+    const response = await axios.get("http://localhost:5000/transaction");
     setTransactionLists(response.data);
   };
 
