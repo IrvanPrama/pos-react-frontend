@@ -1,0 +1,167 @@
+* INSTALL LIBRARY
+** COPY PASTE code yang diapit **
+*** Judul penjelasan
+// NOTE
+
+***FRONT-END 
+Map: Install >> Atur penyimpanan >> Tambahkan provider
+
+A. Install redux dan toolkitnya
+
+    //1 Install redux: 
+    Sebuah pustaka untuk memisahkan tampilan dan code logika dalam folder frontend
+    *npm i react-redux*
+
+    //2 Install redux toolkit: 
+    Sebuah pustaka berisi peralatan untuk pakai redux
+    *npm i @reduxjs/toolkit*
+
+B. Atur Penyimpanan Sesi
+    //3 Buat file store.js dalam folder app yang berada di folder src: ini alamatnya:
+    frontend/src/app/store.js
+
+    //4 isi store.js dengan code untuk mengatur penyimpanan sesi:
+   
+**
+   //import kebutuhan
+    import { configureStore } from '@reduxjs/toolkit';
+    import authReducer from "../features/authSlice";
+
+    // Fungsi untuk mengatur reducer (ada hubungannya dengan penyimpanan sesi)
+    export const store = configureStore({
+    reducer: {
+        auth: authReducer
+    },
+    });
+**
+
+C. Tambahkan Provider Tag di bagian kulit terlual HTML
+    //5. Di file /src/index.js tambahkan tag Provider untuk membungkus HTML (<App />) bentuknya akan menjadi seperti berikut:
+     
+    <Provider store={store}>
+      <App />
+    </Provider>
+
+    Setelah di isi keseluruhan codenya akan menjadi seperti berikut:
+
+**
+    import React from "react";
+    import { Provider } from "react-redux";
+    import { store } from "./app/store";
+    import ReactDOM from "react-dom/client";
+    import "./index.css";
+    import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+    import App from "./App";
+    import axios from "axios";
+
+    axios.defaults.withCredentials = true;
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(
+    <React.StrictMode>
+        <Provider store={store}>
+        <App />
+        </Provider>
+        <App />
+    </React.StrictMode>,
+    document.getElementById("root")
+    );
+
+**
+
+D. Logika Sessi
+
+// 6 Buat file authSlice.js pada alamat frontend/src/features/authSlice.js
+
+// 7 Isi file authSLice.js dengan code berikut:
+
+Buat code logika untuk mengatur sessi:
+
+**
+    import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+    import axios from "axios";
+
+    const initialState = {
+    user: null,
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: "",
+    };
+
+    export const Login = createAsyncThunk("user/Login", async (user, thunkAPI) => {
+    try {
+        const response = await axios.post("http://localhost:5000/login", {
+        email: user.email,
+        password: user.password,
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+        const message = error.response.data.msg;
+        return thunkAPI.rejectWithValue(message);
+        }
+    }
+    });
+
+    export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
+    try {
+        const response = await axios.get("http://localhost:5000/me");
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+        const message = error.response.data.msg;
+        return thunkAPI.rejectWithValue(message);
+        }
+    }
+    });
+
+    export const Logout = createAsyncThunk("user/LogOut", async () => {
+    await axios.delete("http://localhost:5000/logout");
+    });
+
+    export const authSlice = createSlice({
+    name: "auth",
+    initialState,
+    reducers: {
+        reset: (state) => initialState,
+    },
+    extraReducers: (builder) => {
+        builder.addCase(Login.pending, (state) => {
+        state.isLoading = true;
+        });
+        builder.addCase(Login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+        });
+        builder.addCase(Login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        });
+
+        // Get User Login
+        builder.addCase(getMe.pending, (state) => {
+        state.isLoading = true;
+        });
+        builder.addCase(getMe.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+        });
+        builder.addCase(getMe.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        });
+    },
+    });
+
+    export const { reset } = authSlice.actions;
+    export default authSlice.reducer;
+**
+
+//!! FRONTEND SELESAI 
+
+lanjut >> folder BACKEND
