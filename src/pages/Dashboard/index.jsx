@@ -35,7 +35,6 @@ const Dashboard = () => {
           />
         </Col>
       </Row>
-
       <AddedPacket />
     </div>
   );
