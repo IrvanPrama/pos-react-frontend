@@ -16,7 +16,7 @@ function Sidebar({ children }) {
   const navigate = useNavigate();
   const logout = async () => {
     await axios.delete("http://localhost:5000/logout");
-    navigate("/");
+    navigate("/login");
   };
 
   const handleLogout = async () => {
