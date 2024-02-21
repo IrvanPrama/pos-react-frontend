@@ -4,17 +4,23 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Table from "react-bootstrap/esm/Table";
 import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const User = () => {
   const [userlists, setUserLists] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUserLists();
   }, []);
 
   const getUserLists = async () => {
-    const response = await axios.get("http://localhost:5000/users");
-    setUserLists(response.data);
+    try {
+      const response = await axios.get("http://localhost:5000/users");
+      setUserLists(response.data);
+    } catch (error) {
+      navigate("/login");
+    }
   };
 
   const destroyUser = async (id) => {

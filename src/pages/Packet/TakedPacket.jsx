@@ -2,10 +2,12 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
+import { useNavigate } from "react-router-dom";
 
 const AddedPacket = () => {
   //3. gunakan pustaka untuk menambahkan state pada bagian kosong berikut
   const [transactionLists, setTransactionLists] = useState([]);
+  const navigate = useNavigate();
 
   // 4. gunakan fungsi pada pustaka yang untuk mengaplikasikan state yang ditambahkan pada bagian kosong berikut
   useEffect(() => {
@@ -13,9 +15,12 @@ const AddedPacket = () => {
   }, []);
 
   const getTransactionLists = async () => {
-    // 5. gunakan fungsi pada suatu pustaka yang digunakan untuk meminta data melalui http dan gunakan fungsi get untuk mengambil data itu
-    const response = await axios.get("http://localhost:5000/packet/taked");
-    setTransactionLists(response.data);
+    try {
+      const response = await axios.get("http://localhost:5000/packet/taked");
+      setTransactionLists(response.data);
+    } catch (error) {
+      navigate("/login");
+    }
   };
 
   const destroyData = async (id) => {

@@ -1,19 +1,23 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 
 const RemainingPacket = () => {
   const [transactionLists, setTransactionLists] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     getTransactionLists();
   }, []);
 
   const getTransactionLists = async () => {
-    const response = await axios.get("http://localhost:5000/packet/beli/01");
-    setTransactionLists(response.data);
+    try {
+      const response = await axios.get("http://localhost:5000/packet/beli/01");
+      setTransactionLists(response.data);
+    } catch (error) {
+      navigate("/login");
+    }
   };
 
   const destroyData = async (id) => {

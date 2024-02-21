@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { getMe } from "../../features/authSlice";
 import { Row, Col } from "react-bootstrap";
 import OneCard from "../../component/ViewCard/OneCard.jsx";
 import TwoCard from "../../component/ViewCard/TwoCard.jsx";

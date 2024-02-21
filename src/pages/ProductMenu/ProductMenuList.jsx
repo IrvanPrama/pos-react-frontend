@@ -13,9 +13,12 @@ const ProductMenu = () => {
   }, []);
 
   const getProductLists = async () => {
-    // 5. gunakan fungsi pada suatu pustaka yang digunakan untuk meminta data melalui http dan gunakan fungsi get untuk mengambil data itu
-    const response = await axios.get("http://localhost:5000/product-menu");
-    setProductLists(response.data);
+    try {
+      const response = await axios.get("http://localhost:5000/product-menu");
+      setProductLists(response.data);
+    } catch (error) {
+      navigate("/login");
+    }
   };
 
   const destroyData = async (id) => {
