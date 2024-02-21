@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+// import { getMe } from "../../features/authSlice";
 import { Row, Col } from "react-bootstrap";
 import OneCard from "../../component/ViewCard/OneCard.jsx";
 import TwoCard from "../../component/ViewCard/TwoCard.jsx";
@@ -7,6 +10,20 @@ import ReuseButton from "../../component/ReuseButton.jsx";
 import AddedPacket from "../Packet/AddedPacket.jsx";
 
 const Dashboard = () => {
+  // const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isError } = useSelector((state) => state.auth);
+
+  // useEffect(() => {
+  //   dispatch(getMe());
+  // }, [dispatch]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/login");
+    }
+  }, [isError, navigate]);
+
   return (
     <div>
       <h1>Halaman Utama</h1>
