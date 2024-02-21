@@ -10,6 +10,7 @@ const Transactions = () => {
   const [search, setSearch] = useState("");
   const [filterBy, setFilter] = useState("");
   const [filterQty, setFilterQty] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTransactionLists();
@@ -17,19 +18,17 @@ const Transactions = () => {
   });
 
   const getTotalTransaction = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:5000/totaltransactions"
-      );
-      setTotalTransaction(response.data.totalP);
-    } catch (error) {
-      console.error("Gagal mengambil total transaksi:", error);
-    }
+    const response = await axios.get("http://localhost:5000/totaltransactions");
+    setTotalTransaction(response.data.totalP);
   };
 
   const getTransactionLists = async () => {
-    const response = await axios.get("http://localhost:5000/transaction");
-    setTransactionLists(response.data);
+    try {
+      const response = await axios.get("http://localhost:5000/transaction");
+      setTransactionLists(response.data);
+    } catch (error) {
+      navigate("/login");
+    }
   };
 
   const destroyData = async (id) => {
