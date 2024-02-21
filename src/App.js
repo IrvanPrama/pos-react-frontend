@@ -1,21 +1,16 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Sidebar from "./component/Sidebar";
+import Navbar from "./component/Navbar";
 import Dashboard from "./pages/Dashboard";
 import User from "./pages/User";
 import EditUser from "./pages/User/EditUser";
 import AddUser from "./pages/User/AddUser";
-
 import Product from "./pages/Product";
 import AddProduct from "./pages/Product/AddProduct";
-
 import ProductMenu from "./pages/ProductMenu";
 import AddProductMenu from "./pages/ProductMenu/AddProductMenu";
-
-// 2. Kemudian import halaman Transaction yang akan diarahkan disini
 import Transaction from "./pages/Transaction";
 import AddTransaction from "./pages/Transaction/AddTransaction";
-
-// 3. Kemudian import halaman Packet yang akan diarahkan disini
 import Packet from "./pages/Packet";
 import AddPacket from "./pages/Packet/AddPacket";
 import TakePacket from "./pages/Packet/TakePacket";
@@ -26,9 +21,11 @@ import Signup from "./pages/Auth/Signup";
 function App() {
   return (
     <Router>
+      <Navbar />
       <Sidebar>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/users" element={<User />} />
           <Route path="/user/add" element={<AddUser />} />
