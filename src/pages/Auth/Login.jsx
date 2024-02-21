@@ -1,15 +1,36 @@
 // Login.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-// Tambahkan LINK
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { LoginUser, reset } from "../../features/authSlice";
+// import axios from "axios";
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isError, isSuccess, isLoading, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (user || isSuccess) {
+      navigate("/dashboard");
+    }
+    dispatch(reset());
+  }, [user, isSuccess, dispatch, navigate]);
+
+  const Auth = (e) => {
+    e.preventDefault();
+    dispatch(LoginUser({ username, password }));
+  };
+
+  // const [credentials, setCredentials] = useState({
+  //   username: "",
+  //   password: "",
+  // });
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -17,38 +38,36 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleChange = (e) => {
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const handleChange = (e) => {
+  //   setCredentials({
+  //     ...credentials,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
-  const navigate = useNavigate();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:5000/login",
+  //       credentials
+  //     );
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/login",
-        credentials
-      );
+  //     console.log(response.data);
 
-      console.log(response.data);
-
-      if (response.data.message === "Login successful") {
-        navigate("/dashboard");
-      } else {
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error(
-        "Login failed:",
-        error.message || "An unexpected error occurred"
-      );
-      // Handle different types of errors (e.g., display error messages to the user)
-    }
-  };
+  //     if (response.data.message === "Login successful") {
+  //       navigate("/dashboard");
+  //     } else {
+  //       navigate("/login");
+  //     }
+  //   } catch (error) {
+  //     console.error(
+  //       "Login failed:",
+  //       error.message || "An unexpected error occurred"
+  //     );
+  //     // Handle different types of errors (e.g., display error messages to the user)
+  //   }
+  // };
 
   return (
     <div className="mt-5">
@@ -57,8 +76,8 @@ const Login = () => {
           <div className="card">
             <div className="card-body">
               <h3 className="card-title text-center mb-4">Login</h3>
-              <form onSubmit={handleSubmit}>
-                {/* {<p className="has-text-centered">{message}</p>} */}
+              <form onSubmit={Auth}>
+                {isError && <p className="has-text-centered">{message}</p>}
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">
                     Username
@@ -68,8 +87,9 @@ const Login = () => {
                     className="form-control"
                     id="username"
                     name="username"
-                    value={credentials.username}
-                    onChange={handleChange}
+                    value={username}
+                    // onChange={handleChange}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                   />
                 </div>
@@ -83,8 +103,9 @@ const Login = () => {
                       className="form-control"
                       id="password"
                       name="password"
-                      value={credentials.password}
-                      onChange={handleChange}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      // onChange={handleChange}
                       required
                     />
                     <button
@@ -97,7 +118,7 @@ const Login = () => {
                   </div>
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">
-                  Login
+                  {isLoading ? "Loading..." : "Login"}
                 </button>
               </form>
 
