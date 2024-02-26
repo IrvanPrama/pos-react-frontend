@@ -10,7 +10,6 @@ const Transactions = () => {
   const [search, setSearch] = useState("");
   const [filterBy, setFilter] = useState("");
   const [filterQty, setFilterQty] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     getTransactionLists();
@@ -23,12 +22,8 @@ const Transactions = () => {
   };
 
   const getTransactionLists = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/transaction");
-      setTransactionLists(response.data);
-    } catch (error) {
-      navigate("/login");
-    }
+    const response = await axios.get("http://localhost:5000/transaction");
+    setTransactionLists(response.data);
   };
 
   const destroyData = async (id) => {

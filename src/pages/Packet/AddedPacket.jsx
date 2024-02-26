@@ -6,7 +6,6 @@ import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 
 const AddedPacket = () => {
-  const navigate = useNavigate();
   const [transactionLists, setTransactionLists] = useState([]);
 
   useEffect(() => {
@@ -14,12 +13,8 @@ const AddedPacket = () => {
   }, []);
 
   const getTransactionLists = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/packet/added");
-      setTransactionLists(response.data);
-    } catch (error) {
-      navigate("/login");
-    }
+    const response = await axios.get("http://localhost:5000/packet/added");
+    setTransactionLists(response.data);
   };
 
   return (

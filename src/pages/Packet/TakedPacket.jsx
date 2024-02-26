@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 const AddedPacket = () => {
   //3. gunakan pustaka untuk menambahkan state pada bagian kosong berikut
   const [transactionLists, setTransactionLists] = useState([]);
-  const navigate = useNavigate();
 
   // 4. gunakan fungsi pada pustaka yang untuk mengaplikasikan state yang ditambahkan pada bagian kosong berikut
   useEffect(() => {
@@ -15,12 +14,8 @@ const AddedPacket = () => {
   }, []);
 
   const getTransactionLists = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/packet/taked");
-      setTransactionLists(response.data);
-    } catch (error) {
-      navigate("/login");
-    }
+    const response = await axios.get("http://localhost:5000/packet/taked");
+    setTransactionLists(response.data);
   };
 
   const destroyData = async (id) => {

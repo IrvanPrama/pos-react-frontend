@@ -15,12 +15,8 @@ const User = () => {
   }, []);
 
   const getUserLists = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/users");
-      setUserLists(response.data);
-    } catch (error) {
-      navigate("/login");
-    }
+    const response = await axios.get("http://localhost:5000/users");
+    setUserLists(response.data);
   };
 
   const destroyUser = async (id) => {

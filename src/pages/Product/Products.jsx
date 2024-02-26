@@ -7,19 +7,14 @@ import Table from "react-bootstrap/esm/Table";
 
 const Products = () => {
   const [productLists, setProductLists] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     getProductLists();
   }, []);
 
   const getProductLists = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/product");
-      setProductLists(response.data);
-    } catch (error) {
-      navigate("/login");
-    }
+    const response = await axios.get("http://localhost:5000/product");
+    setProductLists(response.data);
   };
 
   const destroyData = async (id) => {

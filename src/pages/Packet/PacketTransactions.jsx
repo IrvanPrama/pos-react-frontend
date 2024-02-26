@@ -6,22 +6,18 @@ import Table from "react-bootstrap/Table";
 
 const PacketTransactions = () => {
   const [transactionLists, setTransactionLists] = useState([]);
-  const navigate = useNavigate();
+  //1. buat variable const untuk navigate
 
   useEffect(() => {
     getTransactionLists();
   }, []);
 
   const getTransactionLists = async () => {
-    // 5. gunakan fungsi pada suatu pustaka yang digunakan untuk meminta data melalui http dan gunakan fungsi get untuk mengambil data itu
-    try {
-      const response = await axios.get(
-        "http://localhost:5000/packettransactions"
-      );
-      setTransactionLists(response.data);
-    } catch (error) {
-      navigate("/login");
-    }
+    // 2. Ubah code berikut, gunakan try & catch untuk menjalankan redirect ke login, ketka terjadi error
+    const response = await axios.get(
+      "http://localhost:5000/packettransactions"
+    );
+    setTransactionLists(response.data);
   };
 
   const destroyData = async (id) => {
@@ -118,3 +114,5 @@ const PacketTransactions = () => {
 };
 
 export default PacketTransactions;
+
+//Lakukan hal yang sama seperti ini untuk file yang melakukan fungsi penarikan data.

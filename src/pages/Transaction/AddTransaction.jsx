@@ -87,7 +87,7 @@ const AddTransaction = () => {
           product_name,
           product_price,
           product_qty,
-          status: 0,
+          status: "1",
           product_total: productTot,
           product_taked: "0",
         });
