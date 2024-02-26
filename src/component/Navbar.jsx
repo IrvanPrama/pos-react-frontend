@@ -1,18 +1,22 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-// import logo from "../logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Logout, reset } from "../features/authSlice";
 
 const Navbar = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
+  // const dispatch = useDispatch(); // dipakai untuk menggunakan Dispatch
+  // const navigate = useNavigate(); // dipakai untuk menggunakan navigasi
+  // const { user } = useSelector((state) => state.auth); // dipakai untuk menggunakan Selector, untuk memilih fungsi yang digunakan dala file ./features/authSlide.js
+
+  // MEMBUAT FUNGSI LOGOUT
+  //1 Lihat variabel logout di nomor 2
+  // - masukan fungsi:
+  // - dispatch(Logout());
+  // - dispatch(reset());
+  // - navigate("/login");
 
   const logout = () => {
-    dispatch(Logout());
-    dispatch(reset());
-    navigate("/login");
+    //2. masukan semua fungsi diatas kedalam variabel logout ini
   };
 
   return (
@@ -23,9 +27,7 @@ const Navbar = () => {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <NavLink to="/dashboard" className="navbar-item">
-            {/* <img src={logo} width="112" height="28" alt="logo" /> */}
-          </NavLink>
+          <NavLink to="/dashboard" className="navbar-item"></NavLink>
 
           <a
             href="!#"
@@ -45,7 +47,8 @@ const Navbar = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <button onClick={logout} className="button is-light">
+                {/* 3. Panggil fungsi logout di dalam onClick */}
+                <button onClick="" className="button is-light">
                   Log out
                 </button>
               </div>
