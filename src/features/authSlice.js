@@ -47,7 +47,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    reset: (state) => initialState, //untuk mereset jejak login
   },
   extraReducers: (builder) => {
     builder.addCase(LoginUser.pending, (state) => {
@@ -60,7 +60,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(LoginUser.rejected, (state, action) => {
       state.isLoading = false;
-      state.isError = true;
+      state.isError = true; //untuk kendali ketika mengalami error saat Login
       state.message = action.payload;
     });
 
@@ -81,5 +81,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset } = authSlice.actions; // untuk mencetak fungsi reset yang digunakan untuk logout
 export default authSlice.reducer;
