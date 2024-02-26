@@ -1,0 +1,9 @@
+ALUR KERJA
+
+A. Fitur Tombol Logout
+1. Buat tombol logout di Navbar
+2. buat fungsi logout di ./features/authSlice
+3. Buat fungsi logout di frontend
+
+B. Fitur Redirect Login
+1. Pakai fungsi useNavigate dan navigasikan ke /login di semua file yang berfungsi untuk menarik data (get data)
