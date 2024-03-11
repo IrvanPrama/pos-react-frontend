@@ -11,6 +11,7 @@ import ProductMenu from "./pages/ProductMenu";
 import AddProductMenu from "./pages/ProductMenu/AddProductMenu";
 import Transaction from "./pages/Transaction";
 import AddTransaction from "./pages/Transaction/AddTransaction";
+import EditTransaction from "./pages/Transaction/EditTransaction";
 import Packet from "./pages/Packet";
 import AddPacket from "./pages/Packet/AddPacket";
 import TakePacket from "./pages/Packet/TakePacket";
@@ -46,6 +47,7 @@ function App() {
 
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/transaction/add" element={<AddTransaction />} />
+          <Route path="/transaction/edit/:id" element={<EditTransaction />} />
           <Route path="/login" element={<Login />} />
 
           {/* Step 8, mengarahkan menu ke halaman Signup.js */}

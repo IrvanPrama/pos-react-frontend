@@ -2,18 +2,23 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const AddPacket = () => {
   const [user_name, setUserName] = useState("");
   const [product_id, setProductId] = useState("");
   const [product_name, setProductName] = useState("");
   const [product_price_packet, setProductPricePacket] = useState("");
+  const [product_stok, setProductStok] = useState("");
+  const [product_sold, setProductSold] = useState("");
   const [setProductTotal] = useState("");
+  const [product_pay, setProductPay] = useState("");
+  const [tr_id, setTrId] = useState("");
 
-  const [qty, setNewQty] = useState("");
   const [productQty, setQty] = useState("");
   const [productTaked, setTaked] = useState("");
+  const [status, setStatus] = useState("");
 
   const [products, setProducts] = useState("");
   const [productLists, setProductLists] = useState([]);
@@ -41,13 +46,20 @@ const AddPacket = () => {
       setProductId(selectedProductId);
       setProductName(selectedProduct.product_name);
       setProductPricePacket(selectedProduct.product_price_packet);
+      setProductStok(selectedProduct.product_stok);
+      setProductSold(selectedProduct.product_sold);
+      // Update other states as necessary
+      setTaked(selectedProduct.product_taked);
     }
+
+    console.log(selectedProduct);
 
     const selectedStockProduct = products.find(
       (products) => products.product_id === selectedProductId
     );
     if (selectedStockProduct) {
-      setQty(selectedStockProduct.product_stok);
+      setProductStok(selectedStockProduct.product_stok);
+      setProductSold(selectedStockProduct.product_sold);
       setTaked(selectedStockProduct.product_taked);
     }
   };
@@ -56,26 +68,50 @@ const AddPacket = () => {
     e.preventDefault();
     try {
       const userName = user_name;
-      const Qty = parseInt(qty);
+      const id = product_id;
+      const Qty = parseInt(productQty);
       const productTotal = parseInt(Qty * product_price_packet);
-      const productPrice = parseInt(product_price_packet); // Parse the price
+      const productPrice = parseInt(product_price_packet);
       const productStok = parseInt(productQty) - parseInt(productTaked);
+      const productSold = parseInt(product_sold) + parseInt(Qty);
+      const trId = uuidv4();
       if (Qty > productStok) {
         throw new Error("Jumlah Tidak Boleh Melebihi Stok");
       }
+
+      await axios.patch(`http://localhost:5000/product/update/${id}`, {
+        product_sold: productSold,
+      });
 
       await axios.post("http://localhost:5000/packet/add", {
         user_id: userName,
         user_name,
         product_id,
+        tr_id: trId,
         product_name,
         product_price: productPrice,
         product_qty: Qty,
         product_total: productTotal,
+        product_pay,
         product_taked: "0",
-        trasaction_type: "beli",
+        transaction_type: "beli",
       });
-      navigate("/packet/");
+
+      await axios.post(`http://localhost:5000/transaction/add`, {
+        user_id: userName,
+        user_name,
+        product_id,
+        tr_id: trId,
+        product_name,
+        product_price: productPrice,
+        product_qty: Qty,
+        product_total: productTotal,
+        product_pay,
+        status: "1",
+        transaction_type: "paket",
+      });
+
+      navigate("/dashboard");
     } catch (error) {
       console.log(error.message);
     }
@@ -102,8 +138,8 @@ const AddPacket = () => {
             <Form.Select
               required
               className="input"
-              value={product_id} // Use product_id for value
-              onChange={handleProductSelect} // Call handleProductSelect on change
+              value={product_id}
+              onChange={handleProductSelect}
             >
               <option value="">Pilih Produk</option>
               {productLists.map((product) => (
@@ -119,9 +155,9 @@ const AddPacket = () => {
               disabled
               type="number"
               className="input"
-              value={`${productQty}`}
-              onChange={(e) => setQty(e.target.value)}
-              placeholder="Contoh: 25000"
+              value={
+                (parseInt(product_stok) || 0) - (parseInt(product_sold) || 0)
+              }
             />
           </Form.Group>
           <Form.Group>
@@ -141,8 +177,8 @@ const AddPacket = () => {
             <Form.Control
               type="number"
               className="input"
-              value={qty}
-              onChange={(e) => setNewQty(e.target.value)}
+              value={productQty}
+              onChange={(e) => setQty(e.target.value)}
               placeholder="Contoh: 25"
               min={"1"}
             />
@@ -153,15 +189,48 @@ const AddPacket = () => {
             <Form.Control
               type=""
               className="input"
-              value={`${product_price_packet * qty}`}
+              value={`${product_price_packet * productQty}`}
               onChange={(e) => setProductTotal(e.target.value)}
               placeholder="Contoh: Gianyar"
             />
           </Form.Group>
 
+          <Form.Group>
+            <Form.Label>Nominal Bayar</Form.Label>
+            <Form.Control
+              type=""
+              className="input"
+              value={product_pay}
+              onChange={(e) => setProductPay(e.target.value)}
+              placeholder="Contoh: Gianyar"
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Status</Form.Label>
+            <Form.Select
+              required
+              className="input"
+              value={status} // Use product_id for value
+              onChange={(e) => setStatus(e.target.value)} // Call handleProductSelect on change
+            >
+              <option value="">Pilih Produk</option>
+              <option value="1">Lunas</option>
+              <option value="0">Hutang</option>
+            </Form.Select>
+          </Form.Group>
+
           <Button className="my-3" type="submit" variant="warning">
             Simpan
           </Button>
+          <Link
+            to={"/packet"}
+            className="btn btn-danger m-3"
+            type="submit"
+            variant="warning"
+          >
+            Batal
+          </Link>
         </Form>
       </Card>
     </div>

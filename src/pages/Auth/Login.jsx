@@ -26,48 +26,11 @@ const Login = () => {
     e.preventDefault();
     dispatch(LoginUser({ username, password }));
   };
-
-  // const [credentials, setCredentials] = useState({
-  //   username: "",
-  //   password: "",
-  // });
-
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
-
-  // const handleChange = (e) => {
-  //   setCredentials({
-  //     ...credentials,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:5000/login",
-  //       credentials
-  //     );
-
-  //     console.log(response.data);
-
-  //     if (response.data.message === "Login successful") {
-  //       navigate("/dashboard");
-  //     } else {
-  //       navigate("/login");
-  //     }
-  //   } catch (error) {
-  //     console.error(
-  //       "Login failed:",
-  //       error.message || "An unexpected error occurred"
-  //     );
-  //     // Handle different types of errors (e.g., display error messages to the user)
-  //   }
-  // };
 
   return (
     <div className="mt-5">

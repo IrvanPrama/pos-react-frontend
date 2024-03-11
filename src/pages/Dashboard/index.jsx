@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import OneCard from "../../component/ViewCard/OneCard.jsx";

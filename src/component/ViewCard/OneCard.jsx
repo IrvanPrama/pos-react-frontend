@@ -61,7 +61,7 @@ const OneCard = () => {
   return (
     <Col md={4}>
       <Card className="monitor-card">
-        <p className="mb-0">Total Stok Finisher</p>
+        <p className="mb-0">Stok Finisher</p>
         <div className="row">
           <div className="col-4">
             <FontAwesomeIcon

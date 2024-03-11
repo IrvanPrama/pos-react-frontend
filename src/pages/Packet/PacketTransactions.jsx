@@ -24,9 +24,10 @@ const PacketTransactions = () => {
     }
   };
 
-  const destroyData = async (id) => {
+  const destroyData = async (tr_id) => {
     try {
-      await axios.delete(`http://localhost:5000/delete/packet/${id}`);
+      await axios.delete(`http://localhost:5000/delete/packet/${tr_id}`);
+      await axios.delete(`http://localhost:5000/destroy/data/${tr_id}`);
       getTransactionLists();
     } catch (error) {
       console.log(error.message);
@@ -59,13 +60,16 @@ const PacketTransactions = () => {
               Harga
             </th> */}
             <th className="td-number" scope="col">
-              Qty
+              Stok
             </th>
             <th className="td-md" scope="col">
               Diambil
             </th>
             <th className="td-md" scope="col">
               Total
+            </th>
+            <th className="td-md" scope="col">
+              Dibayar
             </th>
             <th className="td-md" scope="col">
               Tipe
@@ -86,15 +90,10 @@ const PacketTransactions = () => {
               <td>{transaction.product_qty}</td>
               <td>{transaction.product_taked}</td>
               <td>{formatCurrency(transaction.product_total)}</td>
+              <td>{formatCurrency(transaction.product_pay)}</td>
               <td>{transaction.transaction_type}</td>
               <td>
                 <div className="">
-                  <Link
-                    to={`/packet/take/${transaction.id}`}
-                    className="btn btn-info col mx-1"
-                  >
-                    Ambil
-                  </Link>
                   <Link
                     to={`/packet/edit/${transaction.id}`}
                     className="btn btn-info col mx-1"
@@ -102,7 +101,7 @@ const PacketTransactions = () => {
                     Edit
                   </Link>
                   <div
-                    onClick={() => destroyData(transaction.id)}
+                    onClick={() => destroyData(transaction.tr_id)}
                     className="btn btn-danger col mx-1"
                   >
                     Hapus

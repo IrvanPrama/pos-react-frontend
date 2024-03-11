@@ -6,7 +6,6 @@ import {
   faBoxesStacked,
   faUserFriends,
   faBoxOpen,
-  faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 // import { useDispatch } from "react-redux";
 // import { Logout } from "../features/authSlice";
@@ -71,17 +70,8 @@ function Sidebar({ children }) {
     },
     {
       path: "/users",
-      name: "Pengguna",
+      name: "Pelanggan",
       icon: <FontAwesomeIcon icon={faUserFriends} />,
-    },
-    {
-      onClick: logout,
-      name: "Logout",
-      icon: <FontAwesomeIcon icon={faRightFromBracket} />, // Use the imported FontAwesome icon
-      path: "",
-      name: "Logout",
-      icon: <FontAwesomeIcon icon={faRightFromBracket} />, // Use the imported FontAwesome icon
-      onClick: handleLogout,
     },
   ];
 

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 const TakePacket = () => {
   const [user_id, setUserId] = useState("");
@@ -50,7 +50,7 @@ const TakePacket = () => {
 
       const newTaked = parseInt(taked); // Calculate the new product_taked value
       if (newTaked < 1) {
-        throw new Error("Jumlah Diambil harus minimal 1");
+        throw new Error("Minimal ambil 1");
       }
 
       // Check again if the newTaked value is valid after parsing it
@@ -58,18 +58,20 @@ const TakePacket = () => {
         throw new Error("Jumlah Diambil harus angka dan minimal 1");
       }
 
-      if (newTaked > product_qty - product_taked - taked) {
+      if (newTaked == product_qty - product_taked - taked) {
         throw new Error("Jumlah Diambil tidak boleh lebih dari stok sisa");
       }
 
-      await axios.post(`http://localhost:5000/transaction/add`, {
+      await axios.post(`http://localhost:5000/packet/add`, {
         user_id,
         user_name,
         product_id,
         product_name,
         product_price,
-        product_qty: newTaked,
+        product_qty: product_taked,
+        product_taked: newTaked,
         product_total,
+        status: "1",
         transaction_type: "ambil",
       });
 
@@ -83,11 +85,11 @@ const TakePacket = () => {
   return (
     <div>
       <Card className="p-3">
-        <h2>Catat Penjualan</h2>
+        <h2>Ambil Paket</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={saveTransaction}>
           <Form.Group>
-            <Form.Label className="label">Pemesan</Form.Label>
+            <Form.Label className="label">Pelanggan</Form.Label>
             <Form.Control
               required
               disabled
@@ -119,15 +121,15 @@ const TakePacket = () => {
               className="input"
               value={`${product_qty - product_taked - taked}`} // Use product_taked here
               onChange={(e) => setProductTaked(e.target.value)}
+              disabled
             />
           </Form.Group>
           <Form.Group>
             <Form.Label className="label">Jumlah Diambil</Form.Label>
             <Form.Control
-              type="text"
+              type="number"
               className="input"
               placeholder="Contoh: 20"
-              value={taked} // Bind the input value to the taked state
               onChange={(e) => setTaked(e.target.value)}
               min="1"
             />
@@ -135,6 +137,14 @@ const TakePacket = () => {
           <Button className="my-3" type="submit" variant="warning">
             Ambil
           </Button>
+          <Link
+            to={"/packet"}
+            className="btn btn-danger m-3"
+            type="submit"
+            variant="warning"
+          >
+            Batal
+          </Link>
         </Form>
       </Card>
     </div>

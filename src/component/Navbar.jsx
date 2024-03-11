@@ -1,13 +1,20 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-// import logo from "../logo.png";
+import React, { useEffect } from "react";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Logout, reset } from "../features/authSlice";
+import { getMe } from "../features/authSlice";
+import Dropdown from "react-bootstrap/Dropdown";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(getMe());
+  }, [dispatch]);
+
+  console.log("User:", user); // Tambahkan log untuk user di sini
 
   const logout = () => {
     dispatch(Logout());
@@ -18,13 +25,13 @@ const Navbar = () => {
   return (
     <div>
       <nav
-        className="navbar is-fixed-top has-shadow"
+        className="navbar is-fixed-top shadow-sm bg-body-tertiary"
         role="navigation"
         aria-label="main navigation"
       >
         <div className="navbar-brand">
           <NavLink to="/dashboard" className="navbar-item">
-            {/* <img src={logo} width="112" height="28" alt="logo" /> */}
+            {/* Your logo */}
           </NavLink>
 
           <a
@@ -43,13 +50,25 @@ const Navbar = () => {
 
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-end">
-            <div className="navbar-item">
-              <div className="buttons">
-                <button onClick={logout} className="button is-light">
-                  Log out
-                </button>
-              </div>
-            </div>
+            <Dropdown>
+              <Dropdown.Toggle variant="" id="dropdown-basic">
+                <img
+                  className="profile-img"
+                  src={`http://localhost:5000/public/images/${
+                    user && user.user_profile
+                  }`}
+                  alt=""
+                  srcset=""
+                />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1" className="text-capitalize">
+                  {user && user.user_name}
+                </Dropdown.Item>
+                <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
       </nav>

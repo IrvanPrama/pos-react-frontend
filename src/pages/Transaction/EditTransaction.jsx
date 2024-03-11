@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-const EditPacket = () => {
+const EditTransaction = () => {
   const [user_name, setUserName] = useState("");
   // const [product_id, setProductId] = useState("");
   const [product_name, setProductName] = useState("");
@@ -17,7 +18,7 @@ const EditPacket = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getPacketById();
+    getTransactionById();
   }, []);
 
   // Fungsi untuk mengirim data ke controller product agar bisa dilakukan penyimpanan
@@ -51,8 +52,8 @@ const EditPacket = () => {
     }
   };
 
-  const getPacketById = async () => {
-    const response = await axios.get(`http://localhost:5000/packet/edit/${id}`);
+  const getTransactionById = async () => {
+    const response = await axios.get(`http://localhost:5000/transaction/${id}`);
     setUserName(response.data.user_name);
     setProductName(response.data.product_name);
     setProductQty(response.data.product_qty);
@@ -132,7 +133,7 @@ const EditPacket = () => {
             Simpan
           </Button>
           <Link
-            to={"/packet"}
+            to={"/transaction"}
             className="btn btn-danger m-3"
             type="submit"
             variant="warning"
@@ -144,5 +145,4 @@ const EditPacket = () => {
     </div>
   );
 };
-
-export default EditPacket;
+export default EditTransaction;

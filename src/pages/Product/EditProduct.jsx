@@ -3,7 +3,7 @@ import axios from "axios";
 import { Card, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const AddProduct = () => {
+const EditProduct = () => {
   const [product_name, setProductName] = useState("Nama Produk");
   const [product_price, setProductPrice] = useState("0");
   const [product_stok, setStok] = useState("1");
@@ -69,4 +69,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

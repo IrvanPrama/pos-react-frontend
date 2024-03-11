@@ -123,3 +123,10 @@ a {
 .td-xl {
   width: fit-content;
 }
+
+.profile-img {
+  max-height: 30px;
+  min-height: 10px;
+  max-width: 30px;
+  min-width: 10px;
+}

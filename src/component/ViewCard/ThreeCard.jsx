@@ -61,7 +61,7 @@ const ThreeCard = () => {
   return (
     <Col>
       <Card className="monitor-card">
-        <p className="mb-0">Total Stok Finisher Plus</p>
+        <p className="mb-0">Stok Starter</p>
         <div className="row">
           <div className="col-4">
             <FontAwesomeIcon

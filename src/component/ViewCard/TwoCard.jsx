@@ -61,7 +61,7 @@ const TwoCard = () => {
   return (
     <Col>
       <Card className="monitor-card">
-        <p className="mb-0">Total Stok Starter</p>
+        <p className="mb-0">Stok IB</p>
         <div className="row">
           <div className="col-4">
             <FontAwesomeIcon
